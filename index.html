@@ -5,13 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
-          integrity="sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRkIYIb6p4g=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
-            integrity="sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.10.3/mqtt.min.js"
-            integrity="sha512-aAHZnL2a0x1+TorrKGJirDg51TAANQIynvlf7MyqPVZ65pgRyauc/Co5MKQqPIQqxVJ8U4iP6lf2iz6MYBX5zw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         body {
@@ -68,7 +65,7 @@
     <label><input type="checkbox" class="tram-filter" value="13" checked autocomplete="off"> Tram Line 13</label><br>
     <label><input type="checkbox" class="tram-filter" value="15" checked autocomplete="off"> Tram Line 15</label><br>
     <hr/>
-    <label><input id="deselect-all" type="checkbox">deselect all</label>
+    <label><input id="deselect-all" type="checkbox" autocomplete="off">deselect all</label>
 </div>
 
 <script>
@@ -113,30 +110,6 @@
         // client.end()
     })
 
-
-    function oldsetData(payload) {
-
-        const {lat, long, hdg, desi, veh} = payload
-        if (!lat || !long) return
-
-        // console.log(payload)
-
-
-        const vehKey = String(veh);
-        if (!trams[vehKey]) {
-            trams[vehKey] = createTramMarker(lat, long, hdg, desi);
-            /* var myDivIcon = L.divIcon({
-                className: 'my-text-icon',
-                html: '<div style="background-color: white; border: 1px solid black; padding: 2px; width: 40px; height: 30px;"><p style="text-align: center;">A</p></div>'
-            }); */
-            // trams[vehKey] = L.marker([lat, long], {icon: myDivIcon}).addTo(map)
-        } else {
-            trams[vehKey].setLatLng([lat, long]);
-            const img = trams[vehKey]._icon.querySelector('img');
-            if (img) img.style.transform = `rotate(${hdg}deg)`;
-        }
-    }
-
     function setData(payload) {
         const {lat, long, hdg, desi, veh} = payload; // `desi` is the tram line
         if (!lat || !long) return;
@@ -148,8 +121,11 @@
             };
         } else {
             tramMarkers[veh].marker.setLatLng([lat, long]);
-            const img = tramMarkers[veh].marker._icon.querySelector('img');
-            if (img) img.style.transform = `rotate(${hdg}deg)`;
+            try {
+                const img = tramMarkers[veh].marker._icon.querySelector('img');
+                if (img) img.style.transform = `rotate(${hdg}deg)`;
+            } catch (err) {
+            }
         }
     }
 
