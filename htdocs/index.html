@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta property="og:description" content="Seuraa skuruja livenä kartalla"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/tram_32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/tram_16.png">
-    <meta property="og:image" content="/images/tram_512.webp"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="images/tram_32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/tram_16.png">
+    <meta property="og:image" content="images/tram_512.webp"/>
     <link rel="manifest" href="web.manifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -103,7 +103,7 @@
 
     // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Biss.ee'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map)
 
     function createTramMarker(lat, lng, direction, tramLine) {
@@ -201,5 +201,6 @@
     })
 
 </script>
+<script defer data-domain="skuru.biss.ee" src="https://p.didnot.win/pls.js"></script>
 </body>
 </html>
