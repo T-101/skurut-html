@@ -260,7 +260,7 @@
         navigator.geolocation.getCurrentPosition(showPosition)
     }
 
-    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 15].forEach(line => {
+    [1, 2, 3, 4, 5, "5H", 6, 7, 8, 9, 10, 13, 15].forEach(line => {
         const clone = document.getElementById('tram-button').content.cloneNode(true)
         const input = clone.querySelector('input')
         const label = clone.querySelector('label')
