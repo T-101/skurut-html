@@ -2,8 +2,12 @@
 <html lang="fi">
 <head>
     <title>Skuru</title>
+    <meta property="og:title" content="Skurut"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta property="og:description" content="Seuraa skuruja livenä kartalla"/>
+    <meta property="og:image" content="/images/tram_512.webp"/>
+    <link rel="manifest" href="web.manifest">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
@@ -90,9 +94,7 @@
     </div>
 </template>
 
-<div id="filter">
-    <!-- Toggle buttons modifed from https://codepen.io/mallendeo/ -->
-</div>
+<div id="filter"></div>
 
 <script>
     const map = L.map('map').setView([60.18, 24.95], 13)
