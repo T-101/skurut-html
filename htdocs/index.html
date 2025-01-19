@@ -121,7 +121,8 @@
         return marker
     }
 
-    const tramMarkers = {}
+    const tramMarkers = {},
+        tramSet = new Set()
 
     const client = mqtt.connect("wss://mqtt.hsl.fi:443", {clean: true, connectTimeout: 4000})
 
@@ -143,6 +144,11 @@
     function setData(payload) {
         const {lat, long, hdg, desi, veh} = payload // `desi` is the tram line
         if (!lat || !long) return
+
+        if (!tramSet.has(desi)) {
+            tramSet.add(desi)
+            addTramButtons()
+        }
 
         if (!tramMarkers[veh]) {
             tramMarkers[veh] = {
@@ -179,22 +185,27 @@
         function showPosition(position) {
             map.setView([position.coords.latitude, position.coords.longitude], 16)
         }
-
         navigator.geolocation.getCurrentPosition(showPosition)
     }
 
-    [1, 2, 3, 4, 5, "5H", 6, 7, 8, 9, 10, 13, 15].forEach(line => {
-        const clone = document.getElementById('tram-button').content.cloneNode(true)
-        const input = clone.querySelector('input')
-        const label = clone.querySelector('label')
-        input.value = line
-        input.id = `cb3-${line}`
-        label.setAttribute('for', `cb3-${line}`)
-        label.setAttribute('data-tg-off', line)
-        label.setAttribute('data-tg-on', line)
-        label.textContent = line
-        document.getElementById('filter').appendChild(clone)
-    })
+    function addTramButtons() {
+        function intSort(a, b) {
+            return parseInt(a) - parseInt(b)
+        }
+
+        const filterContent = document.querySelector("#filter")
+        filterContent.innerHTML = ""
+        Array.from(tramSet).sort(intSort).forEach(line => {
+            const clone = document.getElementById('tram-button').content.cloneNode(true)
+            const input = clone.querySelector('input')
+            const label = clone.querySelector('label')
+            input.value = line
+            input.id = `cb3-${line}`
+            label.setAttribute('for', `cb3-${line}`)
+            label.textContent = line
+            filterContent.appendChild(clone)
+        })
+    }
 
     document.querySelectorAll('.tgl').forEach(input => {
         input.addEventListener('change', updateFilters)
